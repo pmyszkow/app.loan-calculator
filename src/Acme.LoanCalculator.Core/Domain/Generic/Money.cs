@@ -31,6 +31,20 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
             return new Money(left.Amount - right.Amount, left.Currency);
         }
 
+        public static Money operator *(Money left, decimal right)
+        {
+            return new Money(left.Amount * right, left.Currency);
+        }
+        public static Money operator /(Money left, decimal right)
+        {
+            return new Money(left.Amount * right, left.Currency);
+        }
+
+        public static decimal operator /(Money left, Money right)
+        {
+            return left.Amount / right.Amount;
+        }
+
         public static bool operator ==(Money left, Money right)
         {
             return Equals(left, right);
