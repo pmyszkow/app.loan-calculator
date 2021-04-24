@@ -9,6 +9,8 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
             Percents = percents;
         }
 
+        public static PercentRate Zero { get; } = new PercentRate(Decimal.Zero);
+
         public Decimal Percents { get; }
 
         public Decimal DecimalRate => Percents / 100m;

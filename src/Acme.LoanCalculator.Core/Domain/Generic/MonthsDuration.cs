@@ -11,6 +11,8 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
 
         public static MonthsDuration FromYears(int years) => new MonthsDuration(years * 12);
 
+        public static MonthsDuration Zero { get; } = new MonthsDuration(0);
+
         public int Months { get; }
 
         public int Years => Months / 12;
