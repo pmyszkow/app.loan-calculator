@@ -5,34 +5,37 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 {
     public sealed class LoanCalculation : IEquatable<LoanCalculation>
     {
-        public LoanCalculation(Money amount, MonthsDuration duration, Money commission, AnnualInterestRate interestRate, PercentRate aop, Annuity payments)
+        public LoanCalculation(Money amount, Currency currency, MonthsDuration duration, Money commission, AnnualInterestRate interestRate, Annuity payments, PercentRate aop)
         {
             Money.AssertIsCurrencyTheSame(amount ,commission);
             Amount = amount ?? throw new ArgumentNullException(nameof(amount));
+            Currency = currency ?? throw new ArgumentNullException(nameof(currency));
             Duration = duration ?? throw new ArgumentNullException(nameof(duration));
             Commission = commission ?? throw new ArgumentNullException(nameof(commission));
             InterestRate = interestRate ?? throw new ArgumentNullException(nameof(interestRate));
-            AOP = aop ?? throw new ArgumentNullException(nameof(aop));
             Payments = payments ?? throw new ArgumentNullException(nameof(payments));
+            Aop = aop ?? throw new ArgumentNullException(nameof(aop));
         }
 
         public Money Amount { get; }
 
-        public MonthsDuration Duration { get; }
-        
+        public Currency Currency { get; }
+
         public Money Commission { get; }
+
+        public MonthsDuration Duration { get; }
 
         public AnnualInterestRate InterestRate { get; }
 
-        public PercentRate AOP { get; }
-
         public Annuity Payments { get; }
+
+        public PercentRate Aop { get; }
 
         public bool Equals(LoanCalculation other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(Amount, other.Amount) && Equals(Duration, other.Duration) && Equals(Commission, other.Commission) && Equals(InterestRate, other.InterestRate) && Equals(AOP, other.AOP) && Equals(Payments, other.Payments);
+            return Equals(Amount, other.Amount) && Equals(Duration, other.Duration) && Equals(Commission, other.Commission) && Equals(InterestRate, other.InterestRate) && Equals(Aop, other.Aop) && Equals(Payments, other.Payments);
         }
 
         public override bool Equals(object obj)
@@ -42,7 +45,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Amount, Duration, Commission, InterestRate, AOP, Payments);
+            return HashCode.Combine(Amount, Duration, Commission, InterestRate, Aop, Payments);
         }
 
         public static bool operator ==(LoanCalculation left, LoanCalculation right)
