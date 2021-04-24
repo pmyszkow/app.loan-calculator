@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Acme.LoanCalculator.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "500000 10"
+    }
+  }
+}
