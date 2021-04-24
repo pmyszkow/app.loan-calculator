@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.LoanCalculator.CLI", "Acme.LoanCalculator.CLI\Acme.LoanCalculator.CLI.csproj", "{745A5F9E-D114-46D9-8B7C-6AE53D8F3DA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.LoanCalculator.CLI", "Acme.LoanCalculator.CLI\Acme.LoanCalculator.CLI.csproj", "{745A5F9E-D114-46D9-8B7C-6AE53D8F3DA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.LoanCalculator.Core", "Acme.LoanCalculator.Core\Acme.LoanCalculator.Core.csproj", "{6E102B0A-3DBD-4171-84F2-EA2E048EBA1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.LoanCalculator.Core", "Acme.LoanCalculator.Core\Acme.LoanCalculator.Core.csproj", "{6E102B0A-3DBD-4171-84F2-EA2E048EBA1E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.LoanCalculator.Infrastructure", "Acme.LoanCalculator.Infrastructure\Acme.LoanCalculator.Infrastructure.csproj", "{6BBC060C-D4D1-4FD6-81FF-9494938E2BC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.LoanCalculator.Core.Tests", "Acme.LoanCalculator.Core.Tests\Acme.LoanCalculator.Core.Tests.csproj", "{0217BB70-FA79-42EE-9E89-9E680E8B14D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{6E102B0A-3DBD-4171-84F2-EA2E048EBA1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E102B0A-3DBD-4171-84F2-EA2E048EBA1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E102B0A-3DBD-4171-84F2-EA2E048EBA1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BBC060C-D4D1-4FD6-81FF-9494938E2BC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BBC060C-D4D1-4FD6-81FF-9494938E2BC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BBC060C-D4D1-4FD6-81FF-9494938E2BC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BBC060C-D4D1-4FD6-81FF-9494938E2BC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0217BB70-FA79-42EE-9E89-9E680E8B14D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0217BB70-FA79-42EE-9E89-9E680E8B14D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0217BB70-FA79-42EE-9E89-9E680E8B14D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0217BB70-FA79-42EE-9E89-9E680E8B14D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
