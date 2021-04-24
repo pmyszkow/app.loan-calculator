@@ -7,17 +7,15 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 {
     public sealed class Annuity : IEquatable<Annuity>
     {
-        public Annuity(IReadOnlyList<Payment> payments)
+        public Annuity(IReadOnlyList<Payment> payments, Money totalInterest)
         {
             PaymentsList = payments ?? throw new ArgumentNullException(nameof(payments));
+            TotalInterest = totalInterest ?? throw new ArgumentNullException(nameof(totalInterest));
         }
 
         public IReadOnlyList<Payment> PaymentsList { get; }
 
-        public Money GetTotalInterest()
-        {
-            return PaymentsList.Aggregate(Money.Zero, (current, payment) => current + payment.Interest);
-        }
+        public Money TotalInterest { get; }
 
         public static bool operator ==(Annuity left, Annuity right)
         {
@@ -33,7 +31,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return other.PaymentsList.SequenceEqual(PaymentsList);
+            return Equals(PaymentsList, other.PaymentsList) && Equals(TotalInterest, other.TotalInterest);
         }
 
         public override bool Equals(object obj)
@@ -43,7 +41,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         public override int GetHashCode()
         {
-            return (PaymentsList != null ? PaymentsList.GetHashCode() : 0);
+            return HashCode.Combine(PaymentsList, TotalInterest);
         }
     }
 }
