@@ -13,6 +13,8 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
 
         public static Money DanishCrones(decimal amount) => new Money(amount, Currency.DanishCrone);
 
+        public static Money Zero { get; } = new Money(Decimal.Zero, Generic.Currency.Default);
+
         public decimal Amount { get; }
 
         public Currency Currency { get; }

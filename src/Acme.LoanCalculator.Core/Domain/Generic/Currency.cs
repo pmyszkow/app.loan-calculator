@@ -6,15 +6,15 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
     {
         public Currency(string symbol)
         {
-            if (string.IsNullOrWhiteSpace(symbol))
-            {
+            if (string.IsNullOrWhiteSpace(symbol)) 
                 throw new ArgumentException("Months cannot be null or whitespace.", nameof(symbol));
-            }
 
             Symbol = symbol;
         }
 
         public static Currency DanishCrone => new Currency("kr.");
+
+        public static Currency Default { get; } = DanishCrone;
 
         public string Symbol { get; }
 

@@ -9,6 +9,8 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
             AnnualRate = annualRate;
         }
 
+        public static AnnualInterestRate Zero { get; } = new AnnualInterestRate(PercentRate.Zero);
+
         public PercentRate AnnualRate { get; }
 
         public PercentRate MonthlyRate => AnnualRate / 12;
