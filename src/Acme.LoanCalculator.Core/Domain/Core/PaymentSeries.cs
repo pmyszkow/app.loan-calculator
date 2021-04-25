@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Acme.LoanCalculator.Core.Domain.Generic;
 
@@ -7,16 +8,13 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 {
     public sealed class PaymentSeries : IEquatable<PaymentSeries>
     {
-        public PaymentSeries(IReadOnlyList<Payment> payments, Money totalInterest)
+        public PaymentSeries(IList<Payment> payments)
         {
-            PaymentsList = payments ?? throw new ArgumentNullException(nameof(payments));
-            TotalInterest = totalInterest ?? throw new ArgumentNullException(nameof(totalInterest));
+            Elements = new ReadOnlyCollection<Payment>(payments);
         }
 
-        public IReadOnlyList<Payment> PaymentsList { get; }
-
-        public Money TotalInterest { get; }
-
+        public IReadOnlyCollection<Payment> Elements { get; }
+        
         public static bool operator ==(PaymentSeries left, PaymentSeries right)
         {
             return Equals(left, right);
@@ -31,7 +29,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(PaymentsList, other.PaymentsList) && Equals(TotalInterest, other.TotalInterest);
+            return Elements.SequenceEqual(other.Elements);
         }
 
         public override bool Equals(object obj)
@@ -41,7 +39,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(PaymentsList, TotalInterest);
+            return (Elements != null ? Elements.GetHashCode() : 0);
         }
     }
 }
