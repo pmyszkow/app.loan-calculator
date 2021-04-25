@@ -5,9 +5,9 @@ using Acme.LoanCalculator.Core.Domain.Generic;
 
 namespace Acme.LoanCalculator.Core.Domain.Core
 {
-    public sealed class Annuity : IEquatable<Annuity>
+    public sealed class PaymentSeries : IEquatable<PaymentSeries>
     {
-        public Annuity(IReadOnlyList<Payment> payments, Money totalInterest)
+        public PaymentSeries(IReadOnlyList<Payment> payments, Money totalInterest)
         {
             PaymentsList = payments ?? throw new ArgumentNullException(nameof(payments));
             TotalInterest = totalInterest ?? throw new ArgumentNullException(nameof(totalInterest));
@@ -17,17 +17,17 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         public Money TotalInterest { get; }
 
-        public static bool operator ==(Annuity left, Annuity right)
+        public static bool operator ==(PaymentSeries left, PaymentSeries right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Annuity left, Annuity right)
+        public static bool operator !=(PaymentSeries left, PaymentSeries right)
         {
             return !Equals(left, right);
         }
 
-        public bool Equals(Annuity other)
+        public bool Equals(PaymentSeries other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -36,7 +36,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         public override bool Equals(object obj)
         {
-            return ReferenceEquals(this, obj) || obj is Annuity other && Equals(other);
+            return ReferenceEquals(this, obj) || obj is PaymentSeries other && Equals(other);
         }
 
         public override int GetHashCode()

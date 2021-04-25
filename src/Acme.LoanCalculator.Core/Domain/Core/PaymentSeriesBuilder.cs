@@ -1,8 +1,8 @@
 ﻿namespace Acme.LoanCalculator.Core.Domain.Core
 {
-    public sealed class AnnuityBuilder
+    public sealed class PaymentSeriesBuilder
     {
-        public Annuity Build()
+        public PaymentSeries Build()
         {
             return null;
         }

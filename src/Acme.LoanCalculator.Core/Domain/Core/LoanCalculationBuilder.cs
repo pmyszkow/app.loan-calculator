@@ -19,7 +19,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
             Commission= Money.Zero;
             Duration = MonthsDuration.Zero;
             InterestRate = AnnualInterestRate.Zero;
-            Payments = new Annuity(new ReadOnlyCollection<Payment>(new List<Payment>()), Money.Zero);
+            PaymentSeries = new PaymentSeries(new ReadOnlyCollection<Payment>(new List<Payment>()), Money.Zero);
             Aop = PercentRate.Zero;
         }
 
@@ -33,7 +33,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         private AnnualInterestRate InterestRate { get; set; }
 
-        private Annuity Payments { get; set; }
+        private PaymentSeries PaymentSeries { get; set; }
 
         private PercentRate Aop { get; set; }
 
@@ -59,13 +59,13 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         public LoanCalculation Build()
         {
-            var annuityBuilder = new AnnuityBuilder();
-            Payments = annuityBuilder.Build();
+            var paymentSeriesBuilder = new PaymentSeriesBuilder();
+            PaymentSeries = paymentSeriesBuilder.Build();
 
-            var totalInterest = Payments.TotalInterest;
+            var totalInterest = PaymentSeries.TotalInterest;
             Aop = _aopPolicy.Calculate(Amount, totalInterest, Commission, Duration);
 
-            return new LoanCalculation(Amount, Currency, Duration, Commission, InterestRate, Payments, Aop);
+            return new LoanCalculation(Amount, Currency, Duration, Commission, InterestRate, PaymentSeries, Aop);
         }
     }
 }
