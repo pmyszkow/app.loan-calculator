@@ -5,20 +5,23 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 {
     public sealed class Payment : IEquatable<Payment>
     {
-        public Payment(Money instalment, Money interest)
+        public Payment(int ordinal, Money instalment, Money interest)
         {
             Money.AssertIsCurrencyTheSame(instalment,interest);
+            Ordinal = ordinal;
             Instalment = instalment ?? throw new ArgumentNullException(nameof(instalment));
             Interest = interest ?? throw new ArgumentNullException(nameof(interest));
         }
 
-        public static Payment FromTotalAndInterest(Money total, Money interest)
+        public static Payment FromTotalAndInterest(int ordinal, Money total, Money interest)
         {
             if (total == null) throw new ArgumentNullException(nameof(total));
             if (interest == null) throw new ArgumentNullException(nameof(interest));
 
-            return new Payment(total - interest, interest);
+            return new Payment(ordinal, total - interest, interest);
         }
+
+        public int Ordinal { get; }
 
         public Money Instalment { get; }
 
@@ -40,7 +43,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(Instalment, other.Instalment) && Equals(Interest, other.Interest);
+            return Ordinal == other.Ordinal && Equals(Instalment, other.Instalment) && Equals(Interest, other.Interest);
         }
 
         public override bool Equals(object obj)
@@ -50,12 +53,12 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Instalment, Interest);
+            return HashCode.Combine(Ordinal, Instalment, Interest);
         }
 
         public override string ToString()
         {
-            return $"{nameof(Payment)} - {nameof(Instalment)}: {Instalment}, {nameof(Interest)}: {Interest}, {nameof(Total)}: {Total}";
+            return $"{nameof(Payment)} no. {Ordinal}, {nameof(Instalment)}: {Instalment}, {nameof(Interest)}: {Interest}, {nameof(Total)}: {Total}";
         }
     }
 }
