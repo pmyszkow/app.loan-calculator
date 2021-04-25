@@ -9,11 +9,13 @@ namespace Acme.LoanCalculator.Core.Domain.Core
     {
         private readonly ICommissionPolicy _commissionPolicy;
         private readonly IAopPolicy _aopPolicy;
+        private readonly IPaymentSeriesFactory _paymentSeriesFactory;
 
-        public LoanCalculationBuilder(ICommissionPolicy commissionPolicy, IAopPolicy aopPolicy)
+        public LoanCalculationBuilder(ICommissionPolicy commissionPolicy, IAopPolicy aopPolicy, IPaymentSeriesFactory paymentSeriesFactory)
         {
             _commissionPolicy = commissionPolicy ?? throw new ArgumentNullException(nameof(commissionPolicy));
             _aopPolicy = aopPolicy ?? throw new ArgumentNullException(nameof(aopPolicy));
+            _paymentSeriesFactory = paymentSeriesFactory ?? throw new ArgumentNullException(nameof(paymentSeriesFactory));
             Amount = Money.Zero;
             Currency = Currency.Default;
             Commission= Money.Zero;
@@ -59,10 +61,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         public LoanCalculation Build()
         {
-            var paymentSeriesBuilder = new PaymentSeriesBuilder();
-            PaymentSeries = paymentSeriesBuilder.Build();
-
-            Aop = _aopPolicy.Calculate(Amount, totalInterest, Commission, Duration);
+            PaymentSeries = _paymentSeriesFactory.Generate(Amount, Duration, InterestRate);
 
             return new LoanCalculation(Amount, Currency, Duration, Commission, InterestRate, PaymentSeries, Aop);
         }
