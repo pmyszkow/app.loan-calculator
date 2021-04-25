@@ -19,7 +19,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
             Commission= Money.Zero;
             Duration = MonthsDuration.Zero;
             InterestRate = AnnualInterestRate.Zero;
-            PaymentSeries = new PaymentSeries(new ReadOnlyCollection<Payment>(new List<Payment>()), Money.Zero);
+            PaymentSeries = new PaymentSeries(new ReadOnlyCollection<Payment>(new List<Payment>()));
             Aop = PercentRate.Zero;
         }
 
@@ -62,7 +62,6 @@ namespace Acme.LoanCalculator.Core.Domain.Core
             var paymentSeriesBuilder = new PaymentSeriesBuilder();
             PaymentSeries = paymentSeriesBuilder.Build();
 
-            var totalInterest = PaymentSeries.TotalInterest;
             Aop = _aopPolicy.Calculate(Amount, totalInterest, Commission, Duration);
 
             return new LoanCalculation(Amount, Currency, Duration, Commission, InterestRate, PaymentSeries, Aop);
