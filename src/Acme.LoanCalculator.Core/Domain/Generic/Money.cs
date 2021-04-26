@@ -11,7 +11,7 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
             Currency = currency ?? throw new ArgumentNullException(nameof(currency));
         }
 
-        public static Money DanishCrones(decimal amount) => new Money(amount, Currency.DanishCrone);
+        public static Money FromDanishCrones(decimal amount) => new Money(amount, Currency.DanishCrone);
 
         public static Money Zero { get; } = new Money(Decimal.Zero, Generic.Currency.Default);
 
@@ -31,18 +31,25 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
             return new Money(left.Amount - right.Amount, left.Currency);
         }
 
+        public static decimal operator /(Money left, Money right)
+        {
+            AssertIsCurrencyTheSame(left, right);
+            return left.Amount / right.Amount;
+        }
+
+        public static Money operator *(Money left, PercentRate percent)
+        {
+            return new Money(left.Amount * percent.DecimalRate, left.Currency);
+        }
+
         public static Money operator *(Money left, decimal right)
         {
             return new Money(left.Amount * right, left.Currency);
         }
+
         public static Money operator /(Money left, decimal right)
         {
             return new Money(left.Amount * right, left.Currency);
-        }
-
-        public static decimal operator /(Money left, Money right)
-        {
-            return left.Amount / right.Amount;
         }
 
         public static bool operator ==(Money left, Money right)
