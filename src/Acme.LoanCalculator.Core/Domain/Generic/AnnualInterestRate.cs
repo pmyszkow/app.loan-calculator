@@ -4,16 +4,16 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
 {
     public sealed class AnnualInterestRate : IEquatable<AnnualInterestRate>
     {
-        public AnnualInterestRate(Percent percents)
+        public AnnualInterestRate(Percent percentage)
         {
-            Percents = percents;
+            Percentage = percentage;
         }
 
         public static AnnualInterestRate Zero { get; } = new AnnualInterestRate(Percent.Zero);
 
-        public Percent Percents { get; }
+        public Percent Percentage { get; }
 
-        public Percent GetMonthPercents() => Percents / 12m;
+        public Percent GetMonthlyPercentage() => Percentage / 12m;
 
         public static bool operator ==(AnnualInterestRate left, AnnualInterestRate right)
         {
@@ -29,7 +29,7 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(Percents, other.Percents);
+            return Equals(Percentage, other.Percentage);
         }
 
         public override bool Equals(object obj)
@@ -39,7 +39,7 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
 
         public override int GetHashCode()
         {
-            return (Percents != null ? Percents.GetHashCode() : 0);
+            return (Percentage != null ? Percentage.GetHashCode() : 0);
         }
     }
 }
