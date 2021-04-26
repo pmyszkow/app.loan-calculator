@@ -17,10 +17,10 @@ namespace Acme.LoanCalculator.Core.Domain.Core
             for (int i = 1; i <= duration.Months; i++)
             {
                 var currentInterest = loanAmount * interestRate.GetMonthPercents().GetRate();
-                var currentPayment = Payment.FromTotalAndInterest(i, cyclePayment, currentInterest);
+                var currentPayment = Payment.FromChargeAndInterest(cyclePayment, currentInterest, i);
                 paymentList.Add(currentPayment);
 
-                remainingLoanAmount = remainingLoanAmount - currentPayment.Instalment;
+                remainingLoanAmount = remainingLoanAmount - currentPayment.Installment;
             }
 
             return new PaymentSeries(paymentList);
