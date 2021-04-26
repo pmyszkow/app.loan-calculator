@@ -7,12 +7,12 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
         public Currency(string symbol)
         {
             if (string.IsNullOrWhiteSpace(symbol)) 
-                throw new ArgumentException("Months cannot be null or whitespace.", nameof(symbol));
+                throw new ArgumentException("Currency symbol cannot be null or whitespace.", nameof(symbol));
 
             Symbol = symbol;
         }
 
-        public static Currency DanishCrone => new Currency("kr.");
+        public static Currency DanishCrone { get; } = new Currency("kr.");
 
         public static Currency Default { get; } = DanishCrone;
 
