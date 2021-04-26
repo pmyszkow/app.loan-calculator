@@ -5,7 +5,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 {
     public sealed class LoanCalculation : IEquatable<LoanCalculation>
     {
-        public LoanCalculation(Money amount, Currency currency, MonthsDuration duration, Money commission, AnnualInterestRate interestRate, PaymentSeries payments, Percent aop)
+        public LoanCalculation(Money amount, Currency currency, Duration duration, Money commission, AnnualInterestRate interestRate, PaymentSeries payments, Percent aop)
         {
             Money.AssertIsCurrencyTheSame(amount ,commission);
             Amount = amount ?? throw new ArgumentNullException(nameof(amount));
@@ -23,7 +23,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         public Money Commission { get; }
 
-        public MonthsDuration Duration { get; }
+        public Duration Duration { get; }
 
         public AnnualInterestRate InterestRate { get; }
 

@@ -5,7 +5,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 {
     public class DefaultAopPolicy : IAopPolicy
     {
-        public Percent Calculate(Money amount, Money totalInterest, Money commission, MonthsDuration duration)
+        public Percent Calculate(Money amount, Money totalInterest, Money commission, Duration duration)
         {
             if (amount == null) throw new ArgumentNullException(nameof(amount));
             if (totalInterest == null) throw new ArgumentNullException(nameof(totalInterest));
@@ -13,7 +13,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
             if (duration == null) throw new ArgumentNullException(nameof(duration));
 
             var totalCost = totalInterest + commission;
-            var years = duration.Years;
+            var years = duration.GetYears();
             var yearlyCost = totalCost / years;
             var rate = yearlyCost / amount;
 

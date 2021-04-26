@@ -6,7 +6,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 {
     public sealed class AnnuityPaymentSeriesFactory : IPaymentSeriesFactory
     {
-        public PaymentSeries Generate(Money loanAmount, MonthsDuration duration, AnnualInterestRate interestRate)
+        public PaymentSeries Generate(Money loanAmount, Duration duration, AnnualInterestRate interestRate)
         {
             var paymentList = new List<Payment>();
             Money remainingLoanAmount = loanAmount;

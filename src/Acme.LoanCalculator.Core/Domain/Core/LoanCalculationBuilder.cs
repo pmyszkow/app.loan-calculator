@@ -19,7 +19,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
             Amount = Money.Zero;
             Currency = Currency.Default;
             Commission= Money.Zero;
-            Duration = MonthsDuration.Zero;
+            Duration = Generic.Duration.Zero;
             InterestRate = AnnualInterestRate.Zero;
             PaymentSeries = new PaymentSeries(new ReadOnlyCollection<Payment>(new List<Payment>()));
             Aop = Percent.Zero;
@@ -31,7 +31,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         private Money Commission { get; set; }
 
-        private MonthsDuration Duration { get; set; }
+        private Duration Duration { get; set; }
 
         private AnnualInterestRate InterestRate { get; set; }
 
@@ -47,7 +47,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
             return this;
         }
 
-        public LoanCalculationBuilder WithDuration(MonthsDuration duration)
+        public LoanCalculationBuilder WithDuration(Duration duration)
         {
             Duration = duration ?? throw new ArgumentNullException(nameof(duration));
             return this;
