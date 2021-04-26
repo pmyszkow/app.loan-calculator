@@ -5,11 +5,11 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 {
     public sealed class Payment : IEquatable<Payment>
     {
-        public Payment(int ordinal, Money instalment, Money interest)
+        public Payment(int ordinal, Money installment, Money interest)
         {
-            Money.AssertIsCurrencyTheSame(instalment,interest);
+            Money.AssertIsCurrencyTheSame(installment,interest);
             Ordinal = ordinal;
-            Instalment = instalment ?? throw new ArgumentNullException(nameof(instalment));
+            Instalment = installment ?? throw new ArgumentNullException(nameof(installment));
             Interest = interest ?? throw new ArgumentNullException(nameof(interest));
         }
 
