@@ -14,7 +14,7 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
 
         public decimal Value { get; }
 
-        public decimal Rate => Value / 100m;
+        public decimal GetRate() => Value / 100m;
 
         public static Percent operator *(Percent left, decimal right)
         {
