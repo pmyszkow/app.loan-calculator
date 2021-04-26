@@ -6,6 +6,7 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
     {
         public Percent(decimal value)
         {
+            if (value < 0) throw new ArgumentException("Percent value must be positive.", nameof(value));
             Value = value;
         }
 
