@@ -37,9 +37,9 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
             return left.Amount / right.Amount;
         }
 
-        public static Money operator *(Money left, PercentRate percent)
+        public static Money operator *(Money left, Percent percent)
         {
-            return new Money(left.Amount * percent.DecimalRate, left.Currency);
+            return new Money(left.Amount * percent.Rate, left.Currency);
         }
 
         public static Money operator *(Money left, decimal right)

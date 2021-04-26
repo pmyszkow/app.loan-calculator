@@ -22,7 +22,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
             Duration = MonthsDuration.Zero;
             InterestRate = AnnualInterestRate.Zero;
             PaymentSeries = new PaymentSeries(new ReadOnlyCollection<Payment>(new List<Payment>()));
-            Aop = PercentRate.Zero;
+            Aop = Percent.Zero;
         }
 
         private Money Amount { get; set; }
@@ -37,7 +37,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         private PaymentSeries PaymentSeries { get; set; }
 
-        private PercentRate Aop { get; set; }
+        private Percent Aop { get; set; }
 
         public LoanCalculationBuilder WithAmount(Money amount)
         {

@@ -5,7 +5,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 {
     public class DefaultCommissionPolicy : ICommissionPolicy
     {
-        private readonly PercentRate COMMISION_RATE = new PercentRate(1);
+        private readonly Percent _commision = new Percent(1);
         private readonly Money MAX_COMMISSION = Money.FromDanishCrones(10000);
 
         public Money Calculate(Money loanAmount)
@@ -14,7 +14,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
             if (loanAmount == null) throw new ArgumentNullException(nameof(loanAmount));
 
-            var commission = loanAmount * COMMISION_RATE.DecimalRate;
+            var commission = loanAmount * _commision.Rate;
 
             return commission > MAX_COMMISSION ? MAX_COMMISSION : commission;
         }
