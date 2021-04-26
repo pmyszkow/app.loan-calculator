@@ -4,6 +4,6 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 {
     public interface IPaymentSeriesFactory
     {
-        PaymentSeries Generate(Money loanAmount, MonthsDuration duration, AnnualInterestRate interestRate);
+        PaymentSeries Generate(Money loanAmount, Duration duration, AnnualInterestRate interestRate);
     }
 }

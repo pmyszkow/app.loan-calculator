@@ -2,27 +2,25 @@
 
 namespace Acme.LoanCalculator.Core.Domain.Generic
 {
-    public sealed class MonthsDuration : IEquatable<MonthsDuration>
+    public sealed class Duration : IEquatable<Duration>
     {
-        public MonthsDuration(int months)
+        public Duration(int months)
         {
             Months = months;
         }
 
-        public static MonthsDuration FromYears(int years) => new MonthsDuration(years * 12);
-
-        public static MonthsDuration Zero { get; } = new MonthsDuration(0);
+        public static Duration Zero { get; } = new Duration(0);
 
         public int Months { get; }
 
-        public int Years => Months / 12;
+        public decimal GetYears() => Months / 12m;
 
-        public static bool operator ==(MonthsDuration left, MonthsDuration right)
+        public static bool operator ==(Duration left, Duration right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(MonthsDuration left, MonthsDuration right)
+        public static bool operator !=(Duration left, Duration right)
         {
             return !Equals(left, right);
         }
@@ -32,7 +30,7 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
             return $"{Months} months";
         }
 
-        public bool Equals(MonthsDuration other)
+        public bool Equals(Duration other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -41,7 +39,7 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
 
         public override bool Equals(object obj)
         {
-            return ReferenceEquals(this, obj) || obj is MonthsDuration other && Equals(other);
+            return ReferenceEquals(this, obj) || obj is Duration other && Equals(other);
         }
 
         public override int GetHashCode()
