@@ -7,6 +7,7 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
     {
         public Money(decimal amount, Currency currency)
         {
+            if (amount < 0) throw new ArgumentException("Money amount must be positive value.", nameof(amount));
             Amount = amount;
             Currency = currency ?? throw new ArgumentNullException(nameof(currency));
         }
