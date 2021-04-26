@@ -40,7 +40,7 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
 
         public static Money operator *(Money left, Percent percent)
         {
-            return new Money(left.Amount * percent.Rate, left.Currency);
+            return new Money(left.Amount * percent.GetRate(), left.Currency);
         }
 
         public static Money operator *(Money left, decimal right)

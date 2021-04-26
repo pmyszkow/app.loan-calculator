@@ -14,7 +14,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
             if (loanAmount == null) throw new ArgumentNullException(nameof(loanAmount));
 
-            var commission = loanAmount * _commision.Rate;
+            var commission = loanAmount * _commision.GetRate();
 
             return commission > MAX_COMMISSION ? MAX_COMMISSION : commission;
         }
