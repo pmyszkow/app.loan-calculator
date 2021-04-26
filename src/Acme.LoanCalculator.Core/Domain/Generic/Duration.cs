@@ -4,16 +4,16 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
 {
     public sealed class Duration : IEquatable<Duration>
     {
-        public Duration(int months)
+        public Duration(int monthCount)
         {
-            Months = months;
+            MonthCount = monthCount;
         }
 
         public static Duration Zero { get; } = new Duration(0);
 
-        public int Months { get; }
+        public int MonthCount { get; }
 
-        public decimal GetYears() => Months / 12m;
+        public decimal GetYearCount() => MonthCount / 12m;
 
         public static bool operator ==(Duration left, Duration right)
         {
@@ -27,14 +27,14 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
 
         public override string ToString()
         {
-            return $"{Months} months";
+            return $"{MonthCount} monthCount";
         }
 
         public bool Equals(Duration other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Months == other.Months;
+            return MonthCount == other.MonthCount;
         }
 
         public override bool Equals(object obj)
@@ -44,7 +44,7 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
 
         public override int GetHashCode()
         {
-            return Months;
+            return MonthCount;
         }
     }
 }

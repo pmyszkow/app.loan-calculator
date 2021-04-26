@@ -11,10 +11,10 @@ namespace Acme.LoanCalculator.Core.Domain.Core
             var paymentList = new List<Payment>();
             Money remainingLoanAmount = loanAmount;
 
-            var annuityAmount =  CalculateAnnuityPayment(loanAmount.Amount, (double) interestRate.GetMonthlyPercentage().GetRate(), duration.Months);
+            var annuityAmount =  CalculateAnnuityPayment(loanAmount.Amount, (double) interestRate.GetMonthlyPercentage().GetRate(), duration.MonthCount);
             Money cyclePayment = new  Money(annuityAmount, loanAmount.Currency);
 
-            for (int i = 1; i <= duration.Months; i++)
+            for (int i = 1; i <= duration.MonthCount; i++)
             {
                 var currentInterest = loanAmount * interestRate.GetMonthlyPercentage().GetRate();
                 var currentPayment = Payment.FromChargeAndInterest(cyclePayment, currentInterest, i);

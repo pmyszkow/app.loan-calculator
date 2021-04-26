@@ -13,7 +13,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
             if (duration == null) throw new ArgumentNullException(nameof(duration));
 
             var totalCost = totalInterest + commission;
-            var years = duration.GetYears();
+            var years = duration.GetYearCount();
             var yearlyCost = totalCost / years;
             var rate = yearlyCost / amount;
 

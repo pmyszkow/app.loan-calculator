@@ -10,10 +10,10 @@ namespace Acme.LoanCalculator.Core.Domain.Core
     {
         public PaymentSeries(IList<Payment> payments)
         {
-            Elements = new ReadOnlyCollection<Payment>(payments);
+            Payments = new ReadOnlyCollection<Payment>(payments);
         }
 
-        public IReadOnlyCollection<Payment> Elements { get; }
+        public IReadOnlyCollection<Payment> Payments { get; }
         
         public static bool operator ==(PaymentSeries left, PaymentSeries right)
         {
@@ -29,7 +29,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Elements.SequenceEqual(other.Elements);
+            return Payments.SequenceEqual(other.Payments);
         }
 
         public override bool Equals(object obj)
@@ -39,7 +39,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         public override int GetHashCode()
         {
-            return (Elements != null ? Elements.GetHashCode() : 0);
+            return (Payments != null ? Payments.GetHashCode() : 0);
         }
     }
 }
