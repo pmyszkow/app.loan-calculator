@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Acme.LoanCalculator.Core.Domain.Generic;
 
 namespace Acme.LoanCalculator.Core.Domain.Core
 {
@@ -10,10 +9,10 @@ namespace Acme.LoanCalculator.Core.Domain.Core
     {
         public PaymentSeries(IList<Payment> payments)
         {
-            Payments = new ReadOnlyCollection<Payment>(payments);
+            Series = new ReadOnlyCollection<Payment>(payments);
         }
 
-        public IReadOnlyCollection<Payment> Payments { get; }
+        public IReadOnlyCollection<Payment> Series { get; }
         
         public static bool operator ==(PaymentSeries left, PaymentSeries right)
         {
@@ -29,7 +28,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Payments.SequenceEqual(other.Payments);
+            return Series.SequenceEqual(other.Series);
         }
 
         public override bool Equals(object obj)
@@ -39,7 +38,7 @@ namespace Acme.LoanCalculator.Core.Domain.Core
 
         public override int GetHashCode()
         {
-            return (Payments != null ? Payments.GetHashCode() : 0);
+            return (Series != null ? Series.GetHashCode() : 0);
         }
     }
 }
