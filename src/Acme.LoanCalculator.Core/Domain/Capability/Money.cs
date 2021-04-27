@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Acme.LoanCalculator.Core.Domain.Generic
+namespace Acme.LoanCalculator.Core.Domain.Capability
 {
     public sealed class Money : IEquatable<Money>, IComparable<Money>, IComparable
     {
@@ -40,7 +40,7 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
 
         public static Money operator *(Money left, Percent percent)
         {
-            return new Money(left.Amount * percent.GetRate(), left.Currency);
+            return new Money(left.Amount * percent.DecimalFraction, left.Currency);
         }
 
         public static Money operator *(Money left, decimal right)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Acme.LoanCalculator.Core.Domain.Core
+namespace Acme.LoanCalculator.Core.Domain.Capability
 {
     public sealed class PaymentSeries : IEquatable<PaymentSeries>
     {
