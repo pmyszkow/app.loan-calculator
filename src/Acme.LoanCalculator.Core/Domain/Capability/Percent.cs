@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Acme.LoanCalculator.Core.Domain.Generic
+namespace Acme.LoanCalculator.Core.Domain.Capability
 {
     public sealed class Percent: IEquatable<Percent>
     {
@@ -10,11 +10,13 @@ namespace Acme.LoanCalculator.Core.Domain.Generic
             Value = value;
         }
 
+        public static Percent FromDecimalFraction(decimal fraction) => new Percent(fraction * 100);
+
         public static Percent Zero { get; } = new Percent(0m);
 
         public decimal Value { get; }
 
-        public decimal GetRate() => Value / 100m;
+        public decimal DecimalFraction => Value / 100m;
 
         public static Percent operator *(Percent left, decimal right)
         {

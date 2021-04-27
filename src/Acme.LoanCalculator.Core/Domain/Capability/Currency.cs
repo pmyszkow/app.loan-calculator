@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Acme.LoanCalculator.Core.Domain.Generic
+namespace Acme.LoanCalculator.Core.Domain.Capability
 {
     public sealed class Currency : IEquatable<Currency>
     {
