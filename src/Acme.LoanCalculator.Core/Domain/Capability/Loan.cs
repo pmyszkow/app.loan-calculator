@@ -6,11 +6,11 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
     {
         public Loan(Money amount, NaturalQuantity cyclesCount)
         {
-            Amount = amount ?? throw new ArgumentNullException(nameof(amount));
+            DueAmount = amount ?? throw new ArgumentNullException(nameof(amount));
             CyclesCount = cyclesCount ?? throw new ArgumentNullException(nameof(cyclesCount));
         }
 
-        public Money Amount { get; }
+        public Money DueAmount { get; }
 
         public NaturalQuantity CyclesCount { get; }
 
@@ -18,7 +18,7 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(Amount, other.Amount) && Equals(CyclesCount, other.CyclesCount);
+            return Equals(DueAmount, other.DueAmount) && Equals(CyclesCount, other.CyclesCount);
         }
 
         public override bool Equals(object obj)
@@ -28,7 +28,7 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Amount, CyclesCount);
+            return HashCode.Combine(DueAmount, CyclesCount);
         }
 
         public static bool operator ==(Loan left, Loan right)

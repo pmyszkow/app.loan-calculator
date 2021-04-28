@@ -15,7 +15,7 @@ namespace Acme.LoanCalculator.Core.Domain.Operation
 
         public PaymentSeries Create(Loan debt, LoanTerms debtTerms)
         {
-            var payments = _paymentSeriesPolicy.Generate(debt.Amount, debt.CyclesCount, debtTerms.CycleInterestRate);
+            var payments = _paymentSeriesPolicy.Generate(debt.DueAmount, debt.CyclesCount, debtTerms.CycleInterestRate);
             return new PaymentSeries(payments);
         }
     }
