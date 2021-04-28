@@ -5,10 +5,10 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 {
     public sealed class Money : IEquatable<Money>, IComparable<Money>, IComparable
     {
-        public Money(decimal amount, Currency currency)
+        public Money(decimal value, Currency currency)
         {
-            if (amount < 0) throw new ArgumentException("Money amount must be positive value.", nameof(amount));
-            Amount = amount;
+            if (value < 0) throw new ArgumentException("Money value must be positive.", nameof(value));
+            Value = value;
             Currency = currency ?? throw new ArgumentNullException(nameof(currency));
         }
 
@@ -16,41 +16,41 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 
         public static Money Zero { get; } = new Money(0m, Currency.Default);
 
-        public decimal Amount { get; }
+        public decimal Value { get; }
 
         public Currency Currency { get; }
 
         public static Money operator +(Money left, Money right)
         {
             AssertIsCurrencyTheSame(left, right);
-            return new Money(left.Amount + right.Amount, left.Currency);
+            return new Money(left.Value + right.Value, left.Currency);
         }
 
         public static Money operator -(Money left, Money right)
         {
             AssertIsCurrencyTheSame(left, right);
-            return new Money(left.Amount - right.Amount, left.Currency);
+            return new Money(left.Value - right.Value, left.Currency);
         }
 
         public static decimal operator /(Money left, Money right)
         {
             AssertIsCurrencyTheSame(left, right);
-            return left.Amount / right.Amount;
+            return left.Value / right.Value;
         }
 
         public static Money operator *(Money left, Percent percent)
         {
-            return new Money(left.Amount * percent.DecimalFraction, left.Currency);
+            return new Money(left.Value * percent.DecimalFraction, left.Currency);
         }
 
         public static Money operator *(Money left, decimal right)
         {
-            return new Money(left.Amount * right, left.Currency);
+            return new Money(left.Value * right, left.Currency);
         }
 
         public static Money operator /(Money left, decimal right)
         {
-            return new Money(left.Amount * right, left.Currency);
+            return new Money(left.Value * right, left.Currency);
         }
 
         public static bool operator ==(Money left, Money right)
@@ -92,14 +92,14 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 
         public override string ToString()
         {
-            return $"{Amount:C} {Currency}";
+            return $"{Value:C} {Currency}";
         }
 
         public bool Equals(Money other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Amount == other.Amount && Equals(Currency, other.Currency);
+            return Value == other.Value && Equals(Currency, other.Currency);
         }
 
         public override bool Equals(object obj)
@@ -109,7 +109,7 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Amount, Currency);
+            return HashCode.Combine(Value, Currency);
         }
 
         public int CompareTo(Money other)
@@ -117,7 +117,7 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
             AssertIsCurrencyTheSame(this, other);
             if (ReferenceEquals(this, other)) return 0;
             if (ReferenceEquals(null, other)) return 1;
-            return Amount.CompareTo(other.Amount);
+            return Value.CompareTo(other.Value);
         }
 
         public int CompareTo(object obj)
