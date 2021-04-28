@@ -17,6 +17,15 @@ namespace Acme.LoanCalculator.Core.Domain.Operation
             _paymentSeriesPolicy = paymentSeriesPolicy ?? throw new ArgumentNullException(nameof(paymentSeriesPolicy));
         }
 
-        PaymentOverview Calculate(Money debt, Period duration, Percent annualInterestRate)
+        PaymentOverview Calculate(Loan loan, LoanTerms terms)
+        {
+            var payments = _paymentSeriesPolicy.Generate(loan.Debt, loan.Duration, terms.AnnualInterestRate);
+
+            Money totalInterest = payments.TotalInterest;
+            Money totalAdministrativeFee = _commissionPolicy.Calculate(loan.Debt, terms.CommissionRate, terms.Maximumommission);
+            Percent aop = _aopPolicy.Calculate(loan.Debt, totalInterest, totalAdministrativeFee, loan.Duration);
+
+            return new PaymentOverview(aop, totalInterest, totalAdministrativeFee);
+        }
     }
 }
