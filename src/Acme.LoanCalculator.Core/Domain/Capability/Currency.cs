@@ -6,9 +6,7 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
     {
         public Currency(string symbol)
         {
-            if (string.IsNullOrWhiteSpace(symbol)) 
-                throw new ArgumentException("Currency symbol cannot be null or whitespace.", nameof(symbol));
-
+            if (string.IsNullOrWhiteSpace(symbol)) throw new ArgumentException("Currency symbol cannot be null or whitespace.", nameof(symbol));
             Symbol = symbol;
         }
 

@@ -5,21 +5,21 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 {
     public sealed class Period : IEquatable<Period>
     {
-        public Period(int cycles, CycleInterval interval)
+        public Period(int cycles, TimeInterval interval)
         {
-            if (!Enum.IsDefined(typeof(CycleInterval), interval))
-                throw new InvalidEnumArgumentException(nameof(interval), (int) interval, typeof(CycleInterval));
+            if (!Enum.IsDefined(typeof(TimeInterval), interval))
+                throw new InvalidEnumArgumentException(nameof(interval), (int) interval, typeof(TimeInterval));
             Cycles = cycles;
             Interval = interval;
         }
 
         public int Cycles { get; }
 
-        public CycleInterval Interval { get; }
+        public TimeInterval Interval { get; }
 
-        public int Months => Interval == CycleInterval.Year ? Cycles * 12 : Cycles;
+        public int Months => Interval == TimeInterval.Year ? Cycles * 12 : Cycles;
 
-        public decimal Years => Interval == CycleInterval.Month ? Cycles / 12m : Convert.ToDecimal(Cycles);
+        public decimal Years => Interval == TimeInterval.Month ? Cycles / 12m : Convert.ToDecimal(Cycles);
 
         public bool Equals(Period other)
         {
