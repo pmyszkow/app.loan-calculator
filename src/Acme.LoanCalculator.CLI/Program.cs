@@ -1,4 +1,6 @@
 ﻿using System;
+using Acme.LoanCalculator.Core.Application;
+using Acme.LoanCalculator.Infrastructure;
 
 namespace Acme.LoanCalculator.CLI
 {
@@ -6,7 +8,12 @@ namespace Acme.LoanCalculator.CLI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var controler =
+                new Controller(new CalculateLoanPaymentOverviewUseCase(new Presenter(), new ConfigurationStub()));
+
+            controler.CalculateLoan(500000, 120);
+
+            Console.ReadKey();
         }
     }
 }
