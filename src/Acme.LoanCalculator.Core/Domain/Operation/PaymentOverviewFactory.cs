@@ -8,22 +8,19 @@ namespace Acme.LoanCalculator.Core.Domain.Operation
     {
         private readonly IAopPolicy _aopPolicy;
         private readonly ICommissionPolicy _commissionPolicy;
-        private readonly IPaymentSeriesPolicy _paymentSeriesPolicy;
 
-        public PaymentOverviewFactory(IAopPolicy aopPolicy, ICommissionPolicy commissionPolicy, IPaymentSeriesPolicy paymentSeriesPolicy)
+        public PaymentOverviewFactory(IAopPolicy aopPolicy, ICommissionPolicy commissionPolicy)
         {
             _aopPolicy = aopPolicy ?? throw new ArgumentNullException(nameof(aopPolicy));
             _commissionPolicy = commissionPolicy ?? throw new ArgumentNullException(nameof(commissionPolicy));
-            _paymentSeriesPolicy = paymentSeriesPolicy ?? throw new ArgumentNullException(nameof(paymentSeriesPolicy));
         }
 
-        PaymentOverview Calculate(Loan loan, LoanTerms terms)
+        PaymentOverview Create(LoanCalculation loanCalculation, CommissionTerms commissionTerms)
         {
-            var payments = _paymentSeriesPolicy.Generate(loan.Debt, loan.Duration, terms.AnnualInterestRate);
+            Money totalInterest = loanCalculation.PaymentsPlan.TotalInterest;
 
-            Money totalInterest = payments.TotalInterest;
-            Money totalAdministrativeFee = _commissionPolicy.Calculate(loan.Debt, terms.CommissionRate, terms.Maximumommission);
-            Percent aop = _aopPolicy.Calculate(loan.Debt, totalInterest, totalAdministrativeFee, loan.Duration);
+            Money totalAdministrativeFee = _commissionPolicy.Calculate(loanCalculation.Debt.Amount, commissionTerms);
+            Percent aop = _aopPolicy.Calculate(loanCalculation.Debt.Amount, totalInterest, totalAdministrativeFee, loanCalculation.Debt.CyclesCount);
 
             return new PaymentOverview(aop, totalInterest, totalAdministrativeFee);
         }

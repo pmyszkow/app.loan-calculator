@@ -6,42 +6,42 @@ namespace Acme.LoanCalculator.Core.Domain.Policy
 {
     public class AnnuityPaymentSeriesPolicy : IPaymentSeriesPolicy
     {
-        public PaymentSeries Generate(Money debt, Period duration, Percent cycleInterestRate)
+        public IList<Payment> Generate(Money due, NaturalQuantity cyclesCount, Percent cycleInterestRate)
         {
-            if (debt == null) throw new ArgumentNullException(nameof(debt));
-            if (duration == null) throw new ArgumentNullException(nameof(duration));
+            if (due == null) throw new ArgumentNullException(nameof(due));
+            if (cyclesCount == null) throw new ArgumentNullException(nameof(cyclesCount));
             if (cycleInterestRate == null) throw new ArgumentNullException(nameof(cycleInterestRate));
 
-            var cyclePayments = new List<Payment>();
-            var remainingDebt = debt;
+            var paymentsList = new List<Payment>();
+            var remainingDue = due;
 
-            decimal annuityPaymentAmount = CalculateCyclePaymentAmount(debt.Amount, duration.Cycles, Convert.ToDouble(cycleInterestRate.DecimalFraction));
-            var annuityPayment = new Money(annuityPaymentAmount, debt.Currency);
+            var annuityPaymentAmount = CalculateCyclePaymentAmount(due.Amount, cyclesCount.Value, Convert.ToDouble(cycleInterestRate.DecimalFraction));
+            var annuityPayment = new Money(annuityPaymentAmount, due.Currency);
 
-            for (var cycleNumber = 1; cycleNumber <= duration.Cycles; cycleNumber++)
+            for (var cycleNumber = 1; cycleNumber <= cyclesCount.Value; cycleNumber++)
             {
-                var isLastCycle = cycleNumber == duration.Cycles;
+                var isLastCycle = cycleNumber == cyclesCount.Value;
 
-                var cycleInterest = remainingDebt * cycleInterestRate.DecimalFraction;
+                var cycleInterest = remainingDue * cycleInterestRate.DecimalFraction;
                 var cyclePayment = isLastCycle
-                    ? new Payment(cycleNumber, remainingDebt, cycleInterest)
+                    ? new Payment(cycleNumber, remainingDue, cycleInterest)
                     : Payment.FromTotalAndInterest(cycleNumber, annuityPayment, cycleInterest);
 
-                cyclePayments.Add(cyclePayment);
+                paymentsList.Add(cyclePayment);
 
-                remainingDebt -= cyclePayment.Installment;
+                remainingDue -= cyclePayment.Installment;
             }
 
-            return new PaymentSeries(cyclePayments);
+            return paymentsList;
         }
 
-        private decimal CalculateCyclePaymentAmount(decimal debt, int cycles, double cycleRate)
+        private decimal CalculateCyclePaymentAmount(decimal dueAmount, int cyclesCount, double cycleInterestRate)
         {
-            double poweredElement = Math.Pow(1 + cycleRate, cycles);
+            var poweredElement = Math.Pow(1 + cycleInterestRate, cyclesCount);
 
-            double factor = (cycleRate * poweredElement) / (poweredElement - 1);
+            var factor = (cycleInterestRate * poweredElement) / (poweredElement - 1);
 
-            return debt * Convert.ToDecimal(factor);
+            return dueAmount * Convert.ToDecimal(factor);
         }
     }
 }

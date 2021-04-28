@@ -4,21 +4,21 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 {
     public sealed class Loan : IEquatable<Loan>
     {
-        public Loan(Money debt, Period duration)
+        public Loan(Money amount, NaturalQuantity cyclesCount)
         {
-            Debt = debt ?? throw new ArgumentNullException(nameof(debt));
-            Duration = duration ?? throw new ArgumentNullException(nameof(duration));
+            Amount = amount ?? throw new ArgumentNullException(nameof(amount));
+            CyclesCount = cyclesCount ?? throw new ArgumentNullException(nameof(cyclesCount));
         }
 
-        public Money Debt { get; }
+        public Money Amount { get; }
 
-        public Period Duration { get; }
+        public NaturalQuantity CyclesCount { get; }
 
         public bool Equals(Loan other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(Debt, other.Debt) && Equals(Duration, other.Duration);
+            return Equals(Amount, other.Amount) && Equals(CyclesCount, other.CyclesCount);
         }
 
         public override bool Equals(object obj)
@@ -28,7 +28,7 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Debt, Duration);
+            return HashCode.Combine(Amount, CyclesCount);
         }
 
         public static bool operator ==(Loan left, Loan right)

@@ -5,27 +5,21 @@ namespace Acme.LoanCalculator.Core.Domain.Operation
 {
     public sealed class LoanCalculation : IEquatable<LoanCalculation>
     {
-        public LoanCalculation(Money debt, Period duration, PaymentSeries payments, PaymentOverview paymentOverview)
+        public LoanCalculation(Loan debt, PaymentSeries paymentsPlan)
         {
-            Debt = debt ?? throw new ArgumentNullException(nameof(debt));
-            Duration = duration ?? throw new ArgumentNullException(nameof(duration));
-            Payments = payments ?? throw new ArgumentNullException(nameof(payments));
-            PaymentOverview = paymentOverview ?? throw new ArgumentNullException(nameof(paymentOverview));
+            this.Debt = debt ?? throw new ArgumentNullException(nameof(debt));
+            this.PaymentsPlan = paymentsPlan ?? throw new ArgumentNullException(nameof(paymentsPlan));
         }
 
-        public Money Debt { get; }
+        public Loan Debt { get; }
 
-        public Period Duration { get; }
-
-        public PaymentSeries Payments { get; }
-
-        public PaymentOverview PaymentOverview { get; }
+        public PaymentSeries  PaymentsPlan { get; }
 
         public bool Equals(LoanCalculation other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(Debt, other.Debt) && Equals(Duration, other.Duration) && Equals(Payments, other.Payments) && Equals(PaymentOverview, other.PaymentOverview);
+            return Equals(Debt, other.Debt) && Equals(PaymentsPlan, other.PaymentsPlan);
         }
 
         public override bool Equals(object obj)
@@ -35,7 +29,7 @@ namespace Acme.LoanCalculator.Core.Domain.Operation
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Debt, Duration, Payments, PaymentOverview);
+            return HashCode.Combine(Debt, PaymentsPlan);
         }
 
         public static bool operator ==(LoanCalculation left, LoanCalculation right)

@@ -1,30 +1,30 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Acme.LoanCalculator.Core.Domain.Capability
 {
     public sealed class LoanTerms : IEquatable<LoanTerms>
     {
-        public LoanTerms(Percent annualInterestRate, CycleInterval paymentInterval, Percent commissionRate, Money maximumCommission)
+        public LoanTerms(Percent annualInterestRate, TimeInterval cycleInterval)
         {
+            if (!Enum.IsDefined(typeof(TimeInterval), cycleInterval))
+                throw new InvalidEnumArgumentException(nameof(cycleInterval), (int) cycleInterval,
+                    typeof(TimeInterval));
             this.AnnualInterestRate = annualInterestRate ?? throw new ArgumentNullException(nameof(annualInterestRate));
-            this.PaymentInterval = paymentInterval;
-            this.CommissionRate = commissionRate ?? throw new ArgumentNullException(nameof(commissionRate));
-            this.Maximumommission = maximumCommission ?? throw new ArgumentNullException(nameof(maximumCommission));
+            this.CycleInterval = cycleInterval;
         }
 
         public Percent AnnualInterestRate { get; }
 
-        public CycleInterval PaymentInterval { get; }
+        public TimeInterval CycleInterval { get; }
 
-        public Percent CommissionRate { get; }
-
-        public Money Maximumommission { get; }
+        public Percent CycleInterestRate =>  CycleInterval == TimeInterval.Year ? AnnualInterestRate : AnnualInterestRate / 12;
 
         public bool Equals(LoanTerms other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(AnnualInterestRate, other.AnnualInterestRate) && PaymentInterval == other.PaymentInterval && Equals(CommissionRate, other.CommissionRate) && Equals(Maximumommission, other.Maximumommission);
+            return Equals(AnnualInterestRate, other.AnnualInterestRate) && CycleInterval == other.CycleInterval;
         }
 
         public override bool Equals(object obj)
@@ -34,7 +34,7 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(AnnualInterestRate, (int) PaymentInterval, CommissionRate, Maximumommission);
+            return HashCode.Combine(AnnualInterestRate, (int) CycleInterval);
         }
 
         public static bool operator ==(LoanTerms left, LoanTerms right)

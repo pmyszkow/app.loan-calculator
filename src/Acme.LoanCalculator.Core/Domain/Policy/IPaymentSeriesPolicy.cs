@@ -1,9 +1,10 @@
-﻿using Acme.LoanCalculator.Core.Domain.Capability;
+﻿using System.Collections.Generic;
+using Acme.LoanCalculator.Core.Domain.Capability;
 
 namespace Acme.LoanCalculator.Core.Domain.Policy
 {
     public interface IPaymentSeriesPolicy
     {
-        PaymentSeries Generate(Money debt, Period duration, Percent cycleInterestRate);
+        IList<Payment> Generate(Money due, NaturalQuantity cyclesCount, Percent cycleInterestRate);
     }
 }

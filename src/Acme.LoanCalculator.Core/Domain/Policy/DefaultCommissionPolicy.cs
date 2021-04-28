@@ -5,16 +5,13 @@ namespace Acme.LoanCalculator.Core.Domain.Policy
 {
     public class DefaultCommissionPolicy : ICommissionPolicy
     {
-        public Money Calculate(Money debt, Percent commissionRate, Money maximumCommission)
+        public Money Calculate(Money due, CommissionTerms terms)
         {
-            if (debt == null) throw new ArgumentNullException(nameof(debt));
-            if (commissionRate == null) throw new ArgumentNullException(nameof(commissionRate));
-            if (maximumCommission == null) throw new ArgumentNullException(nameof(maximumCommission));
+            if (due == null) throw new ArgumentNullException(nameof(due));
+            if (terms == null) throw new ArgumentNullException(nameof(terms));
 
-            Money.AssertIsCurrencyTheSame(debt, maximumCommission);
-
-            var calculatedCommission = debt * commissionRate;
-            return calculatedCommission > maximumCommission ? maximumCommission : calculatedCommission;
+            var calculatedCommission = due * terms.Rate;
+            return calculatedCommission > terms.MaximumCommission ? terms.MaximumCommission : calculatedCommission;
         }
     }
 }

@@ -4,6 +4,6 @@ namespace Acme.LoanCalculator.Core.Domain.Policy
 {
     public interface ICommissionPolicy
     {
-        Money Calculate(Money debt, Percent commissionRate, Money maximumCommission);
+        Money Calculate(Money due, CommissionTerms terms);
     }
 }

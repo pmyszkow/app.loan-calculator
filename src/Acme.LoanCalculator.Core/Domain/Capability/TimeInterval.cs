@@ -1,6 +1,6 @@
 ﻿namespace Acme.LoanCalculator.Core.Domain.Capability
 {
-    public enum CycleInterval
+    public enum TimeInterval
     {
         Month,
         Year
