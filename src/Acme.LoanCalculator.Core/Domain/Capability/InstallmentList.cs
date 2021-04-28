@@ -20,6 +20,8 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 
         public Currency InstallmentCurrency => Installments.First().TotalAmount.Currency;
 
+        public Money InstallmentTotalAmount => Installments.First().TotalAmount;
+
         public Money TotalInterestAmount => Installments.Aggregate(new Money(0m, InstallmentCurrency), (current, installment) => current + installment.InterestPart);
 
         public bool Equals(InstallmentList other)
