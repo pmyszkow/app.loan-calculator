@@ -6,17 +6,17 @@ namespace Acme.LoanCalculator.Core.Domain.Policy
 {
     public class AnnuityPaymentSeriesPolicy : IPaymentSeriesPolicy
     {
-        public IList<Payment> Generate(Money due, NaturalQuantity cyclesCount, Percent cycleInterestRate)
+        public IList<Payment> Generate(Money dueAmount, NaturalQuantity cyclesCount, Percent cycleInterestRate)
         {
-            if (due == null) throw new ArgumentNullException(nameof(due));
+            if (dueAmount == null) throw new ArgumentNullException(nameof(dueAmount));
             if (cyclesCount == null) throw new ArgumentNullException(nameof(cyclesCount));
             if (cycleInterestRate == null) throw new ArgumentNullException(nameof(cycleInterestRate));
 
             var paymentsList = new List<Payment>();
-            var remainingDue = due;
+            var remainingDue = dueAmount;
 
-            var annuityPaymentAmount = CalculateCyclePaymentAmount(due.Amount, cyclesCount.Value, Convert.ToDouble(cycleInterestRate.DecimalFraction));
-            var annuityPayment = new Money(annuityPaymentAmount, due.Currency);
+            var annuityPaymentAmount = CalculateCyclePaymentAmount(dueAmount.Value, cyclesCount.Value, Convert.ToDouble(cycleInterestRate.DecimalFraction));
+            var annuityPayment = new Money(annuityPaymentAmount, dueAmount.Currency);
 
             for (var cycleNumber = 1; cycleNumber <= cyclesCount.Value; cycleNumber++)
             {

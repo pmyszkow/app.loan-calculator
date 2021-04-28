@@ -5,6 +5,6 @@ namespace Acme.LoanCalculator.Core.Domain.Policy
 {
     public interface IPaymentSeriesPolicy
     {
-        IList<Payment> Generate(Money due, NaturalQuantity cyclesCount, Percent cycleInterestRate);
+        IList<Payment> Generate(Money dueAmount, NaturalQuantity cyclesCount, Percent cycleInterestRate);
     }
 }
