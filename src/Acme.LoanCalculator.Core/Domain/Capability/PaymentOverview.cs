@@ -1,20 +1,19 @@
 ﻿using System;
-using Acme.LoanCalculator.Core.Domain.Capability;
 
-namespace Acme.LoanCalculator.Core.Domain.Operation
+namespace Acme.LoanCalculator.Core.Domain.Capability
 {
     public sealed class PaymentOverview : IEquatable<PaymentOverview>
     {
-        public PaymentOverview(Percent aop, Money totalInterest, Money totalAdministrativeFee)
+        public PaymentOverview(Percent aop, Money totalInterestAmount, Money totalAdministrativeFee)
         {
-            AOP = aop ?? throw new ArgumentNullException(nameof(aop));
-            TotalInterest = totalInterest ?? throw new ArgumentNullException(nameof(totalInterest));
+            Aop = aop ?? throw new ArgumentNullException(nameof(aop));
+            TotalInterestAmount = totalInterestAmount ?? throw new ArgumentNullException(nameof(totalInterestAmount));
             TotalAdministrativeFee = totalAdministrativeFee ?? throw new ArgumentNullException(nameof(totalAdministrativeFee));
         }
 
-        public Percent AOP { get; }
+        public Percent Aop { get; }
 
-        public Money TotalInterest { get; }
+        public Money TotalInterestAmount { get; }
 
         public Money TotalAdministrativeFee { get; }
 
@@ -22,7 +21,7 @@ namespace Acme.LoanCalculator.Core.Domain.Operation
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(AOP, other.AOP) && Equals(TotalInterest, other.TotalInterest) && Equals(TotalAdministrativeFee, other.TotalAdministrativeFee);
+            return Equals(Aop, other.Aop) && Equals(TotalInterestAmount, other.TotalInterestAmount) && Equals(TotalAdministrativeFee, other.TotalAdministrativeFee);
         }
 
         public override bool Equals(object obj)
@@ -32,7 +31,7 @@ namespace Acme.LoanCalculator.Core.Domain.Operation
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(AOP, TotalInterest, TotalAdministrativeFee);
+            return HashCode.Combine(Aop, TotalInterestAmount, TotalAdministrativeFee);
         }
 
         public static bool operator ==(PaymentOverview left, PaymentOverview right)

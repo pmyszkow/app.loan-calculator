@@ -3,7 +3,7 @@ using Acme.LoanCalculator.Core.Domain.Capability;
 
 namespace Acme.LoanCalculator.Core.Domain.Policy
 {
-    public class DefaultCommissionPolicy : ICommissionPolicy
+    public class CommissionCalculationPolicy : ICommissionCalculationPolicy
     {
         public Money Calculate(Money due, CommissionTerms terms)
         {

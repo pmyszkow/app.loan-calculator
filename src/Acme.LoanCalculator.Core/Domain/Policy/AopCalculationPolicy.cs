@@ -3,7 +3,7 @@ using Acme.LoanCalculator.Core.Domain.Capability;
 
 namespace Acme.LoanCalculator.Core.Domain.Policy
 {
-    public class SimpleAopPolicy : IAopPolicy
+    public class AopCalculationPolicy : IAopCalculationPolicy
     {
         public Percent Calculate(Money due, Money totalInterest, Money commission, NaturalQuantity monthsCount)
         {

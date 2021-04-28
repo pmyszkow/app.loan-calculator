@@ -1,28 +1,27 @@
 ﻿using System;
-using Acme.LoanCalculator.Core.Domain.Capability;
 
-namespace Acme.LoanCalculator.Core.Domain.Operation
+namespace Acme.LoanCalculator.Core.Domain.Capability
 {
     public sealed class LoanSimulation : IEquatable<LoanSimulation>
     {
-        public LoanSimulation(Money dueAmount, NaturalQuantity cyclesCount, PaymentSeries paymentPlan)
+        public LoanSimulation(Money dueAmount, NaturalQuantity installmentsCount, InstallmentList installmentPlan)
         {
             DueAmount = dueAmount ?? throw new ArgumentNullException(nameof(dueAmount));
-            CyclesCount = cyclesCount ?? throw new ArgumentNullException(nameof(cyclesCount));
-            PaymentPlan = paymentPlan ?? throw new ArgumentNullException(nameof(paymentPlan));
+            InstallmentsCount = installmentsCount ?? throw new ArgumentNullException(nameof(installmentsCount));
+            InstallmentPlan = installmentPlan ?? throw new ArgumentNullException(nameof(installmentPlan));
         }
 
         public Money DueAmount { get; }
 
-        public NaturalQuantity CyclesCount { get; }
+        public NaturalQuantity InstallmentsCount { get; }
 
-        public PaymentSeries PaymentPlan { get; }
+        public InstallmentList InstallmentPlan { get; }
 
         public bool Equals(LoanSimulation other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(DueAmount, other.DueAmount) && Equals(CyclesCount, other.CyclesCount) && Equals(PaymentPlan, other.PaymentPlan);
+            return Equals(DueAmount, other.DueAmount) && Equals(InstallmentsCount, other.InstallmentsCount) && Equals(InstallmentPlan, other.InstallmentPlan);
         }
 
         public override bool Equals(object obj)
@@ -32,7 +31,7 @@ namespace Acme.LoanCalculator.Core.Domain.Operation
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(DueAmount, CyclesCount, PaymentPlan);
+            return HashCode.Combine(DueAmount, InstallmentsCount, InstallmentPlan);
         }
 
         public static bool operator ==(LoanSimulation left, LoanSimulation right)
