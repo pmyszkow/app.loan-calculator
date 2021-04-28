@@ -13,7 +13,15 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
         }
 
         public IReadOnlyCollection<Payment> Series { get; }
-        
+
+        public Money TotalInterest
+        {
+            get
+            {
+                return Series.Aggregate(Money.Zero, (current, payment) => current + payment.Interest);
+            }
+        }
+
         public static bool operator ==(PaymentSeries left, PaymentSeries right)
         {
             return Equals(left, right);
