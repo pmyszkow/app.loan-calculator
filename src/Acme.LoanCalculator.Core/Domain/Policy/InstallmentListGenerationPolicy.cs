@@ -35,11 +35,11 @@ namespace Acme.LoanCalculator.Core.Domain.Policy
             return installments;
         }
 
-        private decimal CalculateInstallmentTotalAmount(decimal dueAmount, int cyclesCount, double cycleInterestRate)
+        private decimal CalculateInstallmentTotalAmount(decimal dueAmount, int installmentsCount, double installmentInterestRate)
         {
-            var poweredElement = Math.Pow(1 + cycleInterestRate, cyclesCount);
+            var poweredElement = Math.Pow(1 + installmentInterestRate, installmentsCount);
 
-            var factor = (cycleInterestRate * poweredElement) / (poweredElement - 1);
+            var factor = (installmentInterestRate * poweredElement) / (poweredElement - 1);
 
             return dueAmount * Convert.ToDecimal(factor);
         }

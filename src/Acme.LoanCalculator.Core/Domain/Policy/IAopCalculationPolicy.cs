@@ -4,6 +4,6 @@ namespace Acme.LoanCalculator.Core.Domain.Policy
 {
     public interface IAopCalculationPolicy
     {
-        Percent Calculate(Money due, Money totalInterest, Money commission, NaturalQuantity monthsCount);
+        Percent Calculate(Money due, Money totalInterest, Money administrationFee, NaturalQuantity monthsCount);
     }
 }

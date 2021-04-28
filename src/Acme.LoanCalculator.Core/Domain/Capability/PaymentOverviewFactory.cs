@@ -3,21 +3,21 @@ using Acme.LoanCalculator.Core.Domain.Policy;
 
 namespace Acme.LoanCalculator.Core.Domain.Capability
 {
-    public sealed class PaymentOverviewFactory
+    public sealed class PaymentOverviewFactory : IPaymentOverviewFactory
     {
         private readonly IAopCalculationPolicy _aopCalculationPolicy;
-        private readonly ICommissionCalculationPolicy _commissionCalculationPolicy;
+        private readonly IAdministrationFeeCalculationPolicy _administrationFeeCalculationPolicy;
 
-        public PaymentOverviewFactory(IAopCalculationPolicy aopCalculationPolicy, ICommissionCalculationPolicy commissionCalculationPolicy)
+        public PaymentOverviewFactory(IAopCalculationPolicy aopCalculationPolicy, IAdministrationFeeCalculationPolicy administrationFeeCalculationPolicy)
         {
             _aopCalculationPolicy = aopCalculationPolicy ?? throw new ArgumentNullException(nameof(aopCalculationPolicy));
-            _commissionCalculationPolicy = commissionCalculationPolicy ?? throw new ArgumentNullException(nameof(commissionCalculationPolicy));
+            _administrationFeeCalculationPolicy = administrationFeeCalculationPolicy ?? throw new ArgumentNullException(nameof(administrationFeeCalculationPolicy));
         }
 
-        public PaymentOverview Create(LoanSimulation simulation, CommissionTerms commissionTerms)
+        public PaymentOverview Create(LoanSimulation simulation, AdministrationFeeTerms administrationFeeTerms)
         {
             Money totalInterest = simulation.InstallmentPlan.TotalInterestAmount;
-            Money totalAdministrativeFee = _commissionCalculationPolicy.Calculate(simulation.DueAmount, commissionTerms);
+            Money totalAdministrativeFee = _administrationFeeCalculationPolicy.Calculate(simulation.DueAmount, administrationFeeTerms);
             Percent aop = _aopCalculationPolicy.Calculate(simulation.DueAmount, totalInterest, totalAdministrativeFee, simulation.InstallmentsCount);
 
             return new PaymentOverview(aop, totalInterest, totalAdministrativeFee);
