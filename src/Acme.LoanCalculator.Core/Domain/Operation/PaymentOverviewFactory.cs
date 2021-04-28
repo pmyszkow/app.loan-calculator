@@ -15,12 +15,11 @@ namespace Acme.LoanCalculator.Core.Domain.Operation
             _commissionPolicy = commissionPolicy ?? throw new ArgumentNullException(nameof(commissionPolicy));
         }
 
-        PaymentOverview Create(LoanCalculation loanCalculation, CommissionTerms commissionTerms)
+        PaymentOverview Create(LoanSimulation simulation, CommissionTerms terms)
         {
-            Money totalInterest = loanCalculation.PaymentsPlan.TotalInterest;
-
-            Money totalAdministrativeFee = _commissionPolicy.Calculate(loanCalculation.Debt.Amount, commissionTerms);
-            Percent aop = _aopPolicy.Calculate(loanCalculation.Debt.Amount, totalInterest, totalAdministrativeFee, loanCalculation.Debt.CyclesCount);
+            Money totalInterest = simulation.PaymentPlan.TotalInterest;
+            Money totalAdministrativeFee = _commissionPolicy.Calculate(simulation.DueAmount, terms);
+            Percent aop = _aopPolicy.Calculate(simulation.DueAmount, totalInterest, totalAdministrativeFee, simulation.CyclesCount);
 
             return new PaymentOverview(aop, totalInterest, totalAdministrativeFee);
         }
