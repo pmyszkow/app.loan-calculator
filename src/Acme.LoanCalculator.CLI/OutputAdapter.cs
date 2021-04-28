@@ -33,6 +33,7 @@ namespace Acme.LoanCalculator.CLI
 
             Console.WriteLine("Cost overview");
             Console.WriteLine("=============================================");
+            Console.WriteLine($"Total installment amount: {output.TotalInstallmentAmount}");
             Console.WriteLine($"Aop: {output.Aop}");
             Console.WriteLine($"TotalAmount interest: {output.TotalInterestAmount}");
             Console.WriteLine($"TotalAmount administration fee: {output.AdministrationFee}");

@@ -38,7 +38,8 @@ namespace Acme.LoanCalculator.Core.Application
                 administrationFeeTerms.MaximumAdministrationFee,
                 paymentOverview.Aop,
                 paymentOverview.TotalInterestAmount,
-                paymentOverview.TotalAdministrationFee);
+                paymentOverview.TotalAdministrationFee,
+                loanSimulation.InstallmentPlan.InstallmentTotalAmount);
 
             _outputPort.Write(output);
         }
