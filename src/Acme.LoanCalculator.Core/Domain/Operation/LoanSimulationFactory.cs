@@ -13,7 +13,7 @@ namespace Acme.LoanCalculator.Core.Domain.Operation
             _paymentSeriesPolicy = paymentSeriesPolicy ?? throw new ArgumentNullException(nameof(paymentSeriesPolicy));
         }
 
-        LoanSimulation Create(Loan debt, LoanTerms terms)
+        public LoanSimulation Create(Loan debt, LoanTerms terms)
         {
             var paymentList = _paymentSeriesPolicy.Generate(debt.DueAmount, debt.CyclesCount, terms.CycleInterestRate);
             var paymentPlan =  new PaymentSeries(paymentList);

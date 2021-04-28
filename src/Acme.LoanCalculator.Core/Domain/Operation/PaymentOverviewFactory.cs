@@ -15,7 +15,7 @@ namespace Acme.LoanCalculator.Core.Domain.Operation
             _commissionPolicy = commissionPolicy ?? throw new ArgumentNullException(nameof(commissionPolicy));
         }
 
-        PaymentOverview Create(LoanSimulation simulation, CommissionTerms terms)
+        public PaymentOverview Create(LoanSimulation simulation, CommissionTerms terms)
         {
             Money totalInterest = simulation.PaymentPlan.TotalInterest;
             Money totalAdministrativeFee = _commissionPolicy.Calculate(simulation.DueAmount, terms);
