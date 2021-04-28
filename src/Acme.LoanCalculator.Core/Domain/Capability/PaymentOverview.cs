@@ -4,24 +4,24 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 {
     public sealed class PaymentOverview : IEquatable<PaymentOverview>
     {
-        public PaymentOverview(Percent aop, Money totalInterestAmount, Money totalAdministrativeFee)
+        public PaymentOverview(Percent aop, Money totalInterestAmount, Money totalAdministrationFee)
         {
             Aop = aop ?? throw new ArgumentNullException(nameof(aop));
             TotalInterestAmount = totalInterestAmount ?? throw new ArgumentNullException(nameof(totalInterestAmount));
-            TotalAdministrativeFee = totalAdministrativeFee ?? throw new ArgumentNullException(nameof(totalAdministrativeFee));
+            TotalAdministrationFee = totalAdministrationFee ?? throw new ArgumentNullException(nameof(totalAdministrationFee));
         }
 
         public Percent Aop { get; }
 
         public Money TotalInterestAmount { get; }
 
-        public Money TotalAdministrativeFee { get; }
+        public Money TotalAdministrationFee { get; }
 
         public bool Equals(PaymentOverview other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(Aop, other.Aop) && Equals(TotalInterestAmount, other.TotalInterestAmount) && Equals(TotalAdministrativeFee, other.TotalAdministrativeFee);
+            return Equals(Aop, other.Aop) && Equals(TotalInterestAmount, other.TotalInterestAmount) && Equals(TotalAdministrationFee, other.TotalAdministrationFee);
         }
 
         public override bool Equals(object obj)
@@ -31,7 +31,7 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Aop, TotalInterestAmount, TotalAdministrativeFee);
+            return HashCode.Combine(Aop, TotalInterestAmount, TotalAdministrationFee);
         }
 
         public static bool operator ==(PaymentOverview left, PaymentOverview right)

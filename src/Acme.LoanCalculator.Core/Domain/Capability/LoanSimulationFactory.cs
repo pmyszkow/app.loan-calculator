@@ -3,7 +3,7 @@ using Acme.LoanCalculator.Core.Domain.Policy;
 
 namespace Acme.LoanCalculator.Core.Domain.Capability
 {
-    public class LoanSimulationFactory
+    public class LoanSimulationFactory : ILoanSimulationFactory
     {
         private readonly IInstallmentListGenerationPolicy _installmentListGenerationPolicy;
 

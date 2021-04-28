@@ -4,10 +4,10 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 {
     public sealed class Loan : IEquatable<Loan>
     {
-        public Loan(Money dueAmount, NaturalQuantity cyclesCount)
+        public Loan(Money dueAmount, NaturalQuantity installmentsCount)
         {
             DueAmount = dueAmount ?? throw new ArgumentNullException(nameof(dueAmount));
-            InstallmentsCount = cyclesCount ?? throw new ArgumentNullException(nameof(cyclesCount));
+            InstallmentsCount = installmentsCount ?? throw new ArgumentNullException(nameof(installmentsCount));
         }
 
         public Money DueAmount { get; }

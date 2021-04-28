@@ -13,12 +13,12 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
             Money.AssertIsCurrencyTheSame(capitalPart, interestPart);
         }
 
-        public static Installment FromTotalAmountAndInterestPart(NaturalQuantity cycleNumber, Money totalAmount, Money interestPart)
+        public static Installment FromTotalAmountAndInterestPart(NaturalQuantity installmentNumber, Money totalAmount, Money interestPart)
         {
             if (totalAmount == null) throw new ArgumentNullException(nameof(totalAmount));
             if (interestPart == null) throw new ArgumentNullException(nameof(interestPart));
 
-            return new Installment(cycleNumber, totalAmount - interestPart, interestPart);
+            return new Installment(installmentNumber, totalAmount - interestPart, interestPart);
         }
 
         public NaturalQuantity InstallmentNumber { get; }

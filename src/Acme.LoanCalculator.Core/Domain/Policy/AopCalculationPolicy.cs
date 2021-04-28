@@ -5,14 +5,14 @@ namespace Acme.LoanCalculator.Core.Domain.Policy
 {
     public class AopCalculationPolicy : IAopCalculationPolicy
     {
-        public Percent Calculate(Money due, Money totalInterest, Money commission, NaturalQuantity monthsCount)
+        public Percent Calculate(Money due, Money totalInterest, Money administrationFee, NaturalQuantity monthsCount)
         {
             if (due == null) throw new ArgumentNullException(nameof(due));
             if (totalInterest == null) throw new ArgumentNullException(nameof(totalInterest));
-            if (commission == null) throw new ArgumentNullException(nameof(commission));
+            if (administrationFee == null) throw new ArgumentNullException(nameof(administrationFee));
             if (monthsCount == null) throw new ArgumentNullException(nameof(monthsCount));
 
-            var totalCost = totalInterest + commission;
+            var totalCost = totalInterest + administrationFee;
             var years = monthsCount.Value / 12m;
             var yearlyCost = totalCost / years;
 

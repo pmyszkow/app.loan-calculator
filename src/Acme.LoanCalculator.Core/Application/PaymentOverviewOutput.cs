@@ -1,39 +1,43 @@
 ﻿using System;
+using System.ComponentModel;
 using Acme.LoanCalculator.Core.Domain.Capability;
 
 namespace Acme.LoanCalculator.Core.Application
 {
     public class PaymentOverviewOutput
     {
-        public PaymentOverviewOutput(Percent aop, Money totalInterest, Money totalCommission, Money dueAmount, NaturalQuantity cyclesCount, Percent annualInterestRate, TimeInterval paymentsInterval, Percent commisionRate, Money maximumCommision)
+        public PaymentOverviewOutput(Money dueAmount, NaturalQuantity installmentsCount, Percent annualInterestRate, TimeInterval installmentsInterval, Percent administrationFeeRate, Money maximumAdministrationFee, Percent aop, Money totalInterestAmount, Money administrationFee)
         {
-            Aop = aop ?? throw new ArgumentNullException(nameof(aop));
-            TotalInterest = totalInterest ?? throw new ArgumentNullException(nameof(totalInterest));
-            TotalCommission = totalCommission ?? throw new ArgumentNullException(nameof(totalCommission));
+            if (!Enum.IsDefined(typeof(TimeInterval), installmentsInterval))
+                throw new InvalidEnumArgumentException(nameof(installmentsInterval), (int) installmentsInterval,
+                    typeof(TimeInterval));
             DueAmount = dueAmount ?? throw new ArgumentNullException(nameof(dueAmount));
-            CyclesCount = cyclesCount ?? throw new ArgumentNullException(nameof(cyclesCount));
+            InstallmentsCount = installmentsCount ?? throw new ArgumentNullException(nameof(installmentsCount));
             AnnualInterestRate = annualInterestRate ?? throw new ArgumentNullException(nameof(annualInterestRate));
-            PaymentsInterval = paymentsInterval;
-            CommisionRate = commisionRate ?? throw new ArgumentNullException(nameof(commisionRate));
-            MaximumCommision = maximumCommision ?? throw new ArgumentNullException(nameof(maximumCommision));
+            InstallmentsInterval = installmentsInterval;
+            AdministrationFeeRate = administrationFeeRate ?? throw new ArgumentNullException(nameof(administrationFeeRate));
+            MaximumAdministrationFee = maximumAdministrationFee ?? throw new ArgumentNullException(nameof(maximumAdministrationFee));
+            Aop = aop ?? throw new ArgumentNullException(nameof(aop));
+            TotalInterestAmount = totalInterestAmount ?? throw new ArgumentNullException(nameof(totalInterestAmount));
+            AdministrationFee = administrationFee ?? throw new ArgumentNullException(nameof(administrationFee));
         }
 
         public Money DueAmount { get; }
 
-        public NaturalQuantity CyclesCount { get; }
+        public NaturalQuantity InstallmentsCount { get; }
 
         public Percent AnnualInterestRate { get; }
 
-        public TimeInterval PaymentsInterval { get; }
+        public TimeInterval InstallmentsInterval { get; }
 
-        public Percent CommisionRate { get; }
+        public Percent AdministrationFeeRate { get; }
 
-        public Money MaximumCommision { get; }
+        public Money MaximumAdministrationFee { get; }
 
         public Percent Aop { get; }
 
-        public Money TotalInterest { get; }
+        public Money TotalInterestAmount { get; }
 
-        public Money TotalCommission { get; }
+        public Money AdministrationFee { get; }
     }
 }

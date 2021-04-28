@@ -6,10 +6,10 @@ namespace Acme.LoanCalculator.Core.Application
     {
         Percent AnnualInterestRate { get; }
 
-        TimeInterval PaymentInterval { get; }
+        TimeInterval InstallmentInterval { get; }
 
-        Percent CommisionRate { get; }
+        Percent AdministrationFeeRate { get; }
 
-        Money MaximumCommision { get; }
+        Money MaximumAdministrationFee { get; }
     }
 }
