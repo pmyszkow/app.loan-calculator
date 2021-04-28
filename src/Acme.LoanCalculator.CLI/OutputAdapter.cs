@@ -3,7 +3,7 @@ using Acme.LoanCalculator.Core.Application;
 
 namespace Acme.LoanCalculator.CLI
 {
-    public class OutputPort : IOutputPort
+    public class OutputAdapter : IOutputPort
     {
         public void Write(PaymentOverviewOutput output)
         {

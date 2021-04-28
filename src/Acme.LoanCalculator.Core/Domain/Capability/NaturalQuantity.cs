@@ -38,5 +38,10 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
         {
             return !Equals(left, right);
         }
+
+        public override string ToString()
+        {
+            return $"{Value}";
+        }
     }
 }
