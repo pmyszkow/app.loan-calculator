@@ -5,26 +5,26 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 {
     public sealed class LoanTerms : IEquatable<LoanTerms>
     {
-        public LoanTerms(Percent annualInterestRate, TimeInterval cycleInterval)
+        public LoanTerms(Percent annualInterestRate, TimeInterval installmentInterval)
         {
-            if (!Enum.IsDefined(typeof(TimeInterval), cycleInterval))
-                throw new InvalidEnumArgumentException(nameof(cycleInterval), (int) cycleInterval,
+            if (!Enum.IsDefined(typeof(TimeInterval), installmentInterval))
+                throw new InvalidEnumArgumentException(nameof(installmentInterval), (int) installmentInterval,
                     typeof(TimeInterval));
             this.AnnualInterestRate = annualInterestRate ?? throw new ArgumentNullException(nameof(annualInterestRate));
-            this.CycleInterval = cycleInterval;
+            this.InstallmentInterval = installmentInterval;
         }
 
         public Percent AnnualInterestRate { get; }
 
-        public TimeInterval CycleInterval { get; }
+        public TimeInterval InstallmentInterval { get; }
 
-        public Percent CycleInterestRate =>  CycleInterval == TimeInterval.Year ? AnnualInterestRate : AnnualInterestRate / 12;
+        public Percent InstallmentInterestRate =>  InstallmentInterval == TimeInterval.Year ? AnnualInterestRate : AnnualInterestRate / 12m;
 
         public bool Equals(LoanTerms other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(AnnualInterestRate, other.AnnualInterestRate) && CycleInterval == other.CycleInterval;
+            return Equals(AnnualInterestRate, other.AnnualInterestRate) && InstallmentInterval == other.InstallmentInterval;
         }
 
         public override bool Equals(object obj)
@@ -34,7 +34,7 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(AnnualInterestRate, (int) CycleInterval);
+            return HashCode.Combine(AnnualInterestRate, (int) InstallmentInterval);
         }
 
         public static bool operator ==(LoanTerms left, LoanTerms right)

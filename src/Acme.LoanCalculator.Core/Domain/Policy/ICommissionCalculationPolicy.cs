@@ -2,7 +2,7 @@
 
 namespace Acme.LoanCalculator.Core.Domain.Policy
 {
-    public interface ICommissionPolicy
+    public interface ICommissionCalculationPolicy
     {
         Money Calculate(Money due, CommissionTerms terms);
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using Acme.LoanCalculator.Core.Domain.Capability;
-using Acme.LoanCalculator.Core.Domain.Operation;
 using Acme.LoanCalculator.Core.Domain.Policy;
 
 namespace Acme.LoanCalculator.Core.Application
@@ -11,10 +10,10 @@ namespace Acme.LoanCalculator.Core.Application
         private readonly IConfigurationPort _configurationPort;
 
         private readonly LoanSimulationFactory _loanSimulationFactory =
-            new LoanSimulationFactory(new AnnuityPaymentSeriesPolicy());
+            new LoanSimulationFactory(new InstallmentListGenerationPolicy());
 
         private readonly PaymentOverviewFactory _paymentOverviewFactory =
-            new PaymentOverviewFactory(new SimpleAopPolicy(), new DefaultCommissionPolicy());
+            new PaymentOverviewFactory(new AopCalculationPolicy(), new CommissionCalculationPolicy());
 
         public CalculateLoanPaymentOverviewUseCase(IPresenter presenter, IConfigurationPort configurationPort)
         {
@@ -34,9 +33,9 @@ namespace Acme.LoanCalculator.Core.Application
 
             var paymentOverview = _paymentOverviewFactory.Create(simulation, commisionTerms);
 
-            var output = new PaymentOverviewOutput(paymentOverview.AOP, paymentOverview.TotalInterest,
-                paymentOverview.TotalAdministrativeFee, debt.DueAmount, debt.CyclesCount, terms.AnnualInterestRate,
-                terms.CycleInterval, commisionTerms.Rate, commisionTerms.MaximumCommission);
+            var output = new PaymentOverviewOutput(paymentOverview.Aop, paymentOverview.TotalInterestAmount,
+                paymentOverview.TotalAdministrativeFee, debt.DueAmount, debt.InstallmentsCount, terms.AnnualInterestRate,
+                terms.InstallmentInterval, commisionTerms.Rate, commisionTerms.MaximumCommission);
 
             _presenter.Display(output);
 

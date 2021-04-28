@@ -12,12 +12,12 @@ namespace Acme.LoanCalculator.CLI
             Console.WriteLine("=========================");
             Console.WriteLine("Loan parameters:");
             Console.WriteLine($"Due amount: {output.DueAmount}");
-            Console.WriteLine($"Payments count: {output.CyclesCount}");
+            Console.WriteLine($"Installments count: {output.CyclesCount}");
             
             Console.WriteLine("=========================");
             Console.WriteLine($"Loan terms");
             Console.WriteLine($"Annual interest rate: {output.AnnualInterestRate}");
-            Console.WriteLine($"Payment interval: {output.PaymentsInterval}");
+            Console.WriteLine($"Installment interval: {output.PaymentsInterval}");
 
             Console.WriteLine("=========================");
             Console.WriteLine("Commission terms");
@@ -26,9 +26,9 @@ namespace Acme.LoanCalculator.CLI
 
             Console.WriteLine("=========================");
             Console.WriteLine("Cost overview");
-            Console.WriteLine($"AOP: {output.Aop}");
-            Console.WriteLine($"Total interest: {output.TotalInterest}");
-            Console.WriteLine($"Total commission: {output.TotalCommission}");
+            Console.WriteLine($"Aop: {output.Aop}");
+            Console.WriteLine($"TotalAmount interest: {output.TotalInterest}");
+            Console.WriteLine($"TotalAmount commission: {output.TotalCommission}");
         }
     }
 }

@@ -14,8 +14,6 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 
         public static Money FromDanishCrones(decimal amount) => new Money(amount, Currency.DanishCrone);
 
-        public static Money Zero { get; } = new Money(0m, Currency.Default);
-
         public decimal Value { get; }
 
         public Currency Currency { get; }
@@ -92,7 +90,7 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 
         public override string ToString()
         {
-            return $"{Value:C} {Currency}";
+            return $"{Value:F} {Currency}";
         }
 
         public bool Equals(Money other)
