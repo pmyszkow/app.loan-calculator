@@ -2,7 +2,7 @@
   "profiles": {
     "Acme.LoanCalculator.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "5000000 10"
+      "commandLineArgs": "500000 10"
     }
   }
 }
