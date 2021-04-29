@@ -22,11 +22,17 @@ namespace Acme.LoanCalculator.Core.Application
         {
             var loan = new Loan(input.DueAmount, input.PaymentPeriod);
 
-            var loanTerms = new LoanTerms(_configurationPort.AnnualInterestRate, _configurationPort.InstallmentInterval);
+            decimal.TryParse(_configurationPort.GetConfigValue("AnnualInterestRate"), out var annualInterestRate);
+            Enum.TryParse(_configurationPort.GetConfigValue("InstallmentInterval"), true,
+                out TimeInterval installmentInterval);
+            decimal.TryParse(_configurationPort.GetConfigValue("AdministrationFeeRate"), out var administrationFeeRate);
+            decimal.TryParse(_configurationPort.GetConfigValue("MaximumAdministrationFee"), out var maximumAdministrationFee);
+            
+            var loanTerms = new LoanTerms(new Percent(annualInterestRate), installmentInterval);
 
             var loanSimulation = _loanSimulationFactory.Create(loan, loanTerms);
 
-            var administrationFeeTerms =  new AdministrationFeeTerms(_configurationPort.AdministrationFeeRate, _configurationPort.MaximumAdministrationFee);
+            var administrationFeeTerms =  new AdministrationFeeTerms(new Percent(administrationFeeRate), new Money(maximumAdministrationFee, input.DueAmount.Currency));
 
             var paymentOverview = _paymentOverviewFactory.Create(loanSimulation, administrationFeeTerms);
 
