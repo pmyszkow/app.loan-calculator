@@ -13,11 +13,11 @@ namespace Acme.LoanCalculator.CLI
             _useCase = useCase ?? throw new ArgumentNullException(nameof(useCase));
         }
 
-        public void Generate(decimal dueValue, int installmentsCount)
+        public void Generate(decimal dueValue, double paymentPeriod)
         {
             var input = new GeneratePaymentOverviewInput(
                 new Money(dueValue, Currency.DanishCrone),
-                new NaturalQuantity(installmentsCount)
+                Duration.FromYears(paymentPeriod)
             );
 
             _useCase.Execute(input);

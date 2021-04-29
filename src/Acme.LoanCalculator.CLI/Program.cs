@@ -27,7 +27,7 @@ namespace Acme.LoanCalculator.CLI
             using (var scope = iocContainer.BeginLifetimeScope())
             {
                 var controler = scope.Resolve<PaymentOverviewController>();
-                controler.Generate(500000, 120);
+                controler.Generate(500000, 10d);
             }
 
             Console.ReadKey();

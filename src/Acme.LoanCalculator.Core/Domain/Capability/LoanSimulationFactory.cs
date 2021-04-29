@@ -14,9 +14,11 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
 
         public LoanSimulation Create(Loan debt, LoanTerms terms)
         {
-            var installments = _installmentListGenerationPolicy.Generate(debt.DueAmount, debt.InstallmentsCount, terms.InstallmentInterestRate);
+            var installmentsCount = debt.InstallmentsCount(terms.InstallmentInterval);
+
+            var installments = _installmentListGenerationPolicy.Generate(debt.DueAmount, installmentsCount, terms.InstallmentInterestRate);
             var installmentPlan =  new InstallmentList(installments);
-            return new LoanSimulation(debt.DueAmount, debt.InstallmentsCount, installmentPlan);
+            return new LoanSimulation(debt.DueAmount, installmentsCount, installmentPlan);
         }
     }
 }
