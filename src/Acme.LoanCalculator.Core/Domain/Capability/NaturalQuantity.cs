@@ -29,6 +29,16 @@ namespace Acme.LoanCalculator.Core.Domain.Capability
             return Value;
         }
 
+        public static NaturalQuantity operator *(NaturalQuantity left, int right)
+        {
+            return new NaturalQuantity(left.Value * right);
+        }
+
+        public static NaturalQuantity operator +(NaturalQuantity left, NaturalQuantity right)
+        {
+            return new NaturalQuantity(left.Value + right.Value);
+        }
+
         public static bool operator ==(NaturalQuantity left, NaturalQuantity right)
         {
             return Equals(left, right);

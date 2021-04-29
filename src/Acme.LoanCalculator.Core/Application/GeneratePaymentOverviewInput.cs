@@ -5,14 +5,14 @@ namespace Acme.LoanCalculator.Core.Application
 {
     public sealed class GeneratePaymentOverviewInput
     {
-        public GeneratePaymentOverviewInput(Money dueAmount, NaturalQuantity installmentsCount)
+        public GeneratePaymentOverviewInput(Money dueAmount, Duration paymentPeriod)
         {
             DueAmount = dueAmount ?? throw new ArgumentNullException(nameof(dueAmount));
-            InstallmentsCount = installmentsCount ?? throw new ArgumentNullException(nameof(installmentsCount));
+            PaymentPeriod = paymentPeriod ?? throw new ArgumentNullException(nameof(paymentPeriod));
         }
 
         public Money DueAmount { get; }
 
-        public NaturalQuantity InstallmentsCount { get; }
+        public Duration PaymentPeriod { get; }
     }
 }

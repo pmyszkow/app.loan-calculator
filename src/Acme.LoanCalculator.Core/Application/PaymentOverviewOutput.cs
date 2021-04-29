@@ -6,7 +6,7 @@ namespace Acme.LoanCalculator.Core.Application
 {
     public class PaymentOverviewOutput
     {
-        public PaymentOverviewOutput(Money dueAmount, NaturalQuantity installmentsCount, Percent annualInterestRate, TimeInterval installmentsInterval, Percent administrationFeeRate, Money maximumAdministrationFee, Percent aop, Money totalInterestAmount, Money administrationFee, Money totalInstallmentAmount)
+        public PaymentOverviewOutput(Money dueAmount, NaturalQuantity installmentsCount, Percent annualInterestRate, TimeInterval installmentsInterval, Percent administrationFeeRate, Money maximumAdministrationFee, Percent aop, Money totalInterestAmount, Money administrationFee, Money totalInstallmentAmount, Duration paymentDuration)
         {
             if (!Enum.IsDefined(typeof(TimeInterval), installmentsInterval))
                 throw new InvalidEnumArgumentException(nameof(installmentsInterval), (int) installmentsInterval,
@@ -21,6 +21,7 @@ namespace Acme.LoanCalculator.Core.Application
             TotalInterestAmount = totalInterestAmount ?? throw new ArgumentNullException(nameof(totalInterestAmount));
             AdministrationFee = administrationFee ?? throw new ArgumentNullException(nameof(administrationFee));
             TotalInstallmentAmount = totalInstallmentAmount ?? throw new ArgumentNullException(nameof(totalInstallmentAmount));
+            PaymentDuration = paymentDuration ?? throw new ArgumentNullException(nameof(paymentDuration));
         }
 
         public Money DueAmount { get; }
@@ -42,5 +43,7 @@ namespace Acme.LoanCalculator.Core.Application
         public Money AdministrationFee { get; }
 
         public Money TotalInstallmentAmount { get; }
+
+        public Duration PaymentDuration { get; }
     }
 }

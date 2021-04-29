@@ -20,7 +20,7 @@ namespace Acme.LoanCalculator.Core.Application
 
         public void Execute(GeneratePaymentOverviewInput input)
         {
-            var loan = new Loan(input.DueAmount, input.InstallmentsCount);
+            var loan = new Loan(input.DueAmount, input.PaymentPeriod);
 
             var loanTerms = new LoanTerms(_configurationPort.AnnualInterestRate, _configurationPort.InstallmentInterval);
 
@@ -31,7 +31,7 @@ namespace Acme.LoanCalculator.Core.Application
             var paymentOverview = _paymentOverviewFactory.Create(loanSimulation, administrationFeeTerms);
 
             var output = new PaymentOverviewOutput(loan.DueAmount,
-                loan.InstallmentsCount,
+                loanSimulation.InstallmentsCount,
                 loanTerms.AnnualInterestRate,
                 loanTerms.InstallmentInterval,
                 administrationFeeTerms.Rate,
@@ -39,7 +39,8 @@ namespace Acme.LoanCalculator.Core.Application
                 paymentOverview.Aop,
                 paymentOverview.TotalInterestAmount,
                 paymentOverview.TotalAdministrationFee,
-                loanSimulation.InstallmentPlan.InstallmentTotalAmount);
+                loanSimulation.InstallmentPlan.InstallmentTotalAmount,
+                loan.PaymentPeriod);
 
             _outputPort.Write(output);
         }
