@@ -9,28 +9,46 @@ namespace Acme.LoanCalculator.CLI
 {
     class Program
     {
+        private static IContainer _iocContainer;
+
         static void Main(string[] args)
         {
-            var iocBuilder = new ContainerBuilder();
-            iocBuilder.RegisterType<OutputAdapter>().As<IOutputPort>();
-            iocBuilder.RegisterType<ConfigurationAdapterStub>().As<IConfigurationPort>();
-            iocBuilder.RegisterType<GeneratePaymentOverviewUseCase>().As<IGeneratePaymentOverviewUseCase>();
-            iocBuilder.RegisterType<LoanSimulationFactory>().As<ILoanSimulationFactory>();
-            iocBuilder.RegisterType<PaymentOverviewFactory>().As<IPaymentOverviewFactory>();
-            iocBuilder.RegisterType<AdministrationFeeCalculationPolicy>().As<IAdministrationFeeCalculationPolicy>();
-            iocBuilder.RegisterType<AopCalculationPolicy>().As<IAopCalculationPolicy>();
-            iocBuilder.RegisterType<InstallmentListGenerationPolicy>().As<IInstallmentListGenerationPolicy>();
-            iocBuilder.RegisterType<PaymentOverviewController>();
+            BootstrapContainer();
 
-            IContainer iocContainer = iocBuilder.Build();
-
-            using (var scope = iocContainer.BeginLifetimeScope())
+            using (var scope = _iocContainer.BeginLifetimeScope())
             {
-                var controler = scope.Resolve<PaymentOverviewController>();
-                controler.Generate(500000, 10d);
+                var controller = scope.Resolve<PaymentOverviewController>();
+
+                decimal dueValue = Decimal.Parse(args[0]);
+
+                double paymentPeriod = Double.Parse(args[1]);
+
+                controller.Generate(dueValue, paymentPeriod);
             }
 
             Console.ReadKey();
+        }
+
+        private static void BootstrapContainer()
+        {
+            var iocBuilder = new ContainerBuilder();
+
+            RegisterComponents(iocBuilder);
+
+            _iocContainer = iocBuilder.Build();
+        }
+
+        private static void RegisterComponents(ContainerBuilder builder)
+        {
+            builder.RegisterType<OutputAdapter>().As<IOutputPort>();
+            builder.RegisterType<ConfigurationAdapterStub>().As<IConfigurationPort>();
+            builder.RegisterType<GeneratePaymentOverviewUseCase>().As<IGeneratePaymentOverviewUseCase>();
+            builder.RegisterType<LoanSimulationFactory>().As<ILoanSimulationFactory>();
+            builder.RegisterType<PaymentOverviewFactory>().As<IPaymentOverviewFactory>();
+            builder.RegisterType<AdministrationFeeCalculationPolicy>().As<IAdministrationFeeCalculationPolicy>();
+            builder.RegisterType<AopCalculationPolicy>().As<IAopCalculationPolicy>();
+            builder.RegisterType<InstallmentListGenerationPolicy>().As<IInstallmentListGenerationPolicy>();
+            builder.RegisterType<PaymentOverviewController>();
         }
     }
 }
